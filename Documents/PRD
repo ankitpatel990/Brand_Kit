@@ -1,0 +1,260 @@
+## 2. Executive Summary
+BrandKit is a B2B-focused digital platform (web and mobile app) that enables corporate offices, event organizers, and similar clients to design, preview, and order custom-branded promotional items such as welcome kits (e.g., bags, pens, water bottles, diaries, t-shirts). The platform acts as an aggregator, connecting clients with a network of wholesale vendors specialized in each product category. Clients upload logos or designs, visualize products in real-time, place orders, and receive fulfilled products, while BrandKit earns commissions (10-15%) per order without handling inventory or production.
+
+**Vision**: To become the go-to one-stop platform for customizable promotional merchandise in India, starting with Gujarat-based operations, streamlining B2B procurement and fostering vendor ecosystems for scalable, efficient branding solutions.
+
+**Business Goals**:
+- Achieve 100 active corporate/event clients within the first year.
+- Generate ₹50 lakhs in annual revenue through commissions.
+- Expand to pan-India operations by Year 2, with potential for B2C segments.
+
+**Key Differentiators**:
+- Real-time 3D/360° product previews with uploaded logos.
+- Aggregator model ensuring competitive pricing and no minimum order quantities (MOQs) for clients.
+- Focus on B2B welcome kits and event bundles, with recurring order features.
+
+This PRD outlines the minimum viable product (MVP) requirements, prioritizing core features for launch, while identifying future enhancements.
+
+## 3. Market and User Analysis
+### 3.1 Market Opportunity
+The Indian custom promotional products market is valued at ~₹6,000 crore (USD 731 million) in 2024, growing at 7.8% CAGR, driven by corporate branding, events, and e-commerce. B2B segments (e.g., employee onboarding kits) account for ~40% of demand, with Gujarat's manufacturing hubs (Ahmedabad, Surat) providing vendor advantages. Post-COVID, digital procurement has surged, with 60% of corporates preferring online platforms for customized items.
+
+**Competitive Landscape**:
+- **Direct Competitors**: Printrove, Qikink, Vistaprint India – Offer POD but limited B2B focus and aggregator networks.
+- **Indirect Competitors**: IndiaMART (vendor sourcing), local printers.
+- **Gaps Addressed**: BrandKit fills the need for seamless B2B customization previews, bundled kits, and vendor-agnostic fulfillment, reducing client friction.
+
+**SWOT Analysis**:
+- **Strengths**: Low-capex aggregator model; Gujarat-centric vendor access.
+- **Weaknesses**: Dependency on vendor quality; initial tech build costs (₹5-10 lakhs).
+- **Opportunities**: Rising corporate gifting (9% CAGR); eco-friendly trends.
+- **Threats**: Intense competition; supply chain disruptions.
+
+### 3.2 Target Users
+**Primary Personas**:
+1. **Corporate Procurement Manager** (e.g., HR/Marketing in SMEs/Large Corps):
+   - Needs: Quick customization for welcome kits; bulk orders; invoice integration.
+   - Pain Points: Fragmented vendors; design iterations; high MOQs.
+   - Demographics: 30-45 years, urban India (focus: Gujarat initially).
+
+2. **Event Organizer** (e.g., Wedding Planners, Conference Hosts):
+   - Needs: Themed bundles; fast turnaround; preview accuracy.
+   - Pain Points: Last-minute changes; delivery reliability.
+   - Demographics: 25-40 years, event industry professionals.
+
+**Secondary Personas**: Expand to small businesses/individuals in Phase 2.
+
+**User Segmentation**:
+- 70% Corporates (recurring revenue).
+- 30% Events (seasonal spikes).
+
+## 4. Product Requirements
+### 4.1 High-Level Architecture
+-Frontend (Web)
+Purpose:
+ Fast B2B experience, SEO-friendly, smooth animations, simple logo crop & preview.
+Core
+Next.js (SSG + SSR)
+
+
+TypeScript
+
+
+Styling & UX
+Tailwind CSS
+
+
+Framer Motion (page + micro animations)
+
+
+Logo Upload & Crop
+react-easy-crop
+
+
+Locked aspect ratio
+
+
+Crop only (no move / resize / rotate after crop)
+
+
+Preview Rendering (Client-side)
+Native HTML5 Canvas API
+
+
+Draw base product image
+
+
+Overlay cropped logo at predefined coordinates
+
+
+Image Handling
+Browser File API
+
+
+Canvas toBlob() for preview generation
+
+
+✅ Fabric.js REMOVED
+ (no need anymore)
+
+2️⃣ Backend (Enterprise-Ready)
+Purpose:
+ Security, print accuracy, vendor trust, scalability.
+Core Backend
+Java – Spring Boot
+
+
+REST APIs
+
+
+JWT Authentication
+Responsibilities
+Validate crop data
+
+
+Re-render logo + product image in high resolution
+
+
+Generate print-ready image
+
+
+Store final preview
+
+
+
+3️⃣ Database Layer
+Primary Database
+Supabase with PostgreSQL
+- **Integrations**: Payment gateways (Razorpay/PayU); Partner APIs for order routing; Design tools (e.g., Canva API for previews).
+- **Security**: GDPR-compliant data handling; SSL; Logo upload encryption; Row-level security (RLS) via Supabase.
+- **Scalability**: Cloud hosting (AWS/Heroku); Auto-scaling for order spikes; PostgreSQL connection pooling via Supabase.
+
+### 4.2 Features and Prioritization
+Features are prioritized using MoSCoW method (Must-have, Should-have, Could-have, Won't-have for MVP).
+
+#### 4.2.1 Core Features (Must-Have for MVP)
+1. **User Registration and Authentication**:
+   - Signup/login via email, Google, LinkedIn (B2B focus).
+   - Role-based access: Client, Admin, Vendor (vendor portal for order acceptance).
+
+2. **Product Catalog**:
+   - Categories: Bags, Pens, Water Bottles, Diaries, T-Shirts, etc. (start with 5-10 items).
+   - Filters: Price, Material (e.g., eco-friendly), Product Rating.
+   - Dynamic pricing based on quantity/customization level (pricing defined by sellers, managed by platform).
+
+3. **Customization Engine**:
+   - Upload logo/design (PNG/JPG/SVG; max 10MB).
+   - Real-time preview: 360°/3D rendering on selected product (using Three.js or similar).
+   - Editing tools: Position, scale, color match; AI suggestions for placement.
+   - Bundle builder: Combine items into kits (e.g., "Welcome Kit: Bag + Pen + Bottle").
+
+4. **Order Placement and Management**:
+   - Cart system with quantity selectors (no MOQ enforcement).
+   - Checkout: Address, delivery options (local/pan-India via partners like Delhivery).
+   - Payment: UPI, Cards, Net Banking; Invoicing (GST-compliant).
+   - Order routing: Auto-assign to fulfillment partners based on location, availability, price (partner details hidden from clients).
+
+5. **Partner Dashboard** (internal fulfillment partners):
+   - Order notifications; Acceptance/Rejection.
+   - Production tracking; Upload proofs (e.g., sample images).
+   - Discount management: Partners define discounts; platform can enable/disable, set limits, and audit usage.
+   - Commission settlement (automated payouts minus platform cut).
+
+6. **Admin Panel**:
+   - User/partner management; Analytics (orders, revenue).
+   - Commission settings (e.g., 10% for <₹10k orders, 12% for >₹10k).
+   - Discount oversight: Enable/disable partner discounts, set upper/lower limits, audit usage, suspend abuse.
+
+#### 4.2.2 Enhanced Features (Should-Have)
+1. **Recurring Orders**: Subscription for corporate restocks (e.g., monthly kits).
+2. **AI-Powered Recommendations**: Suggest bundles based on past orders/industry.
+3. **Reviews and Ratings**: Post-delivery feedback for products and overall service quality.
+4. **Notifications**: Email/SMS/Push for order updates.
+
+#### 4.2.3 Nice-to-Have Features (Could-Have)
+1. **Mobile App Exclusive**: AR previews (scan room to visualize items).
+2. **Integration with CRM**: E.g., HubSpot for corporate leads.
+3. **Eco-Options Filter**: Highlight sustainable materials.
+
+#### 4.2.4 Out-of-Scope (Won't-Have for MVP)
+- International shipping.
+- In-house printing (remain aggregator).
+- B2C individual customization.
+
+### 4.3 User Journeys and Stories
+**Key User Journey: Corporate Ordering a Welcome Kit**
+1. User logs in, browses catalog.
+2. Selects items, uploads logo, previews.
+3. Builds bundle, adds to cart.
+4. Checks out, pays; Order routed to fulfillment partner (internal process).
+5. Partner fulfills; User tracks and receives.
+
+**Sample User Stories**:
+- As a Procurement Manager, I want to upload my company logo and see a 360° preview on a t-shirt so I can approve designs quickly.
+- As an Event Organizer, I want to bundle 5 items into a kit with bulk pricing so I can manage costs for 500 attendees.
+- As a Fulfillment Partner, I want real-time order alerts and easy proof uploads so I can fulfill efficiently.
+- As an Admin, I want commission reports and discount oversight tools to manage platform revenue and partner relationships.
+
+## 5. Non-Functional Requirements
+- **Performance**: Page load <2s; Handle 1,000 concurrent users.
+- **Availability**: 99.9% uptime.
+- **Accessibility**: WCAG 2.1 compliant (e.g., alt text for previews).
+- **Localization**: English/Hindi; INR currency.
+- **Data Privacy**: Compliant with India's DPDP Act; Secure logo storage.
+- **Testing**: Unit/UI/Integration; Beta with 10 pilot clients.
+
+## 6. Success Metrics and KPIs
+- **Acquisition**: 50 signups/month; 20% conversion to orders.
+- **Engagement**: 70% preview-to-cart rate; Average order value ₹15,000.
+- **Retention**: 40% repeat clients quarterly.
+- **Revenue**: ₹5 lakhs/month by Month 6; Commission ROI >200%.
+- **Operational**: Vendor fulfillment rate >95%; NPS >8/10.
+- **Tools**: Google Analytics, Mixpanel for tracking.
+
+## 7. Roadmap and Timeline
+**Phase 1: MVP Development (Months 1-3)**  
+- Requirements gathering (Week 1-2).  
+- Design/Prototyping (Weeks 3-6).  
+- Development/Testing (Weeks 7-12).  
+
+**Phase 2: Launch and Iteration (Months 4-6)**  
+- Beta launch in Gujarat; Gather feedback.  
+- Add Should-Have features.  
+
+**Phase 3: Scale (Months 7+)**  
+- Pan-India expansion; Could-Have features.  
+
+**Dependencies**: Fulfillment partnerships (secure 5+ partners per category pre-launch); Budget: ₹10-15 lakhs (dev + marketing).
+
+## 8. Assumptions, Risks, and Mitigations
+**Assumptions**:
+- Fulfillment partners will integrate via simple APIs/email.
+- Market demand sustains 7-10% growth.
+- Tech stack availability in India (Supabase, Spring Boot, Next.js).
+- PostgreSQL/Supabase provides sufficient performance and scalability for MVP.
+
+**Risks**:
+- **Partner Reliability (High)**: Mitigation: SLAs with penalties; Multi-partner backups; Partner details remain internal.
+- **Tech Delays (Medium)**: Mitigation: Agile sprints; Outsource dev if needed.
+- **Competition (Medium)**: Mitigation: Niche B2B focus; Marketing via LinkedIn.
+- **Regulatory (Low)**: Mitigation: Legal review for GST/contracts.
+
+## 9. Appendices
+- **Wireframes**: [Placeholder: High-level sketches for catalog, preview, dashboard – can generate upon request.]
+- **Partner Agreement Outline**: Standard terms including 10-15% commission, 7-day fulfillment SLA, discount management rights (partners define, platform oversees).
+- **Cost Estimates**: Dev: ₹5 lakhs; Marketing: ₹2 lakhs; Ops: ₹1 lakh/month.
+- **References**: Market data from Statista, Grand View Research (custom printing reports).
+- **Database**: Supabase with PostgreSQL for relational data integrity, Row-Level Security, and real-time capabilities.
+
+This PRD serves as a living document. Next steps: Review with stakeholders, refine based on feedback, and initiate wireframing. If you'd like additions (e.g., detailed wireframes, financial projections, or a pitch deck), let me know!
+
+
+
+
+
+
+
+
+WEBSITE Design Details
+
+The website’s desktop frontend styling follows a clean, template-driven visual structure with a strong reliance on modern sans-serif typography that prioritizes readability over character, using consistent font weights and sizes but with limited typographic contrast for strong visual hierarchy; layouts are predominantly grid-based and sectioned vertically, creating a predictable flow with moderate whitespace that keeps the UI uncluttered yet slightly dense in some areas. Imagery is high-resolution and sharp, occupying large containers to create visual impact, though animations are minimal and mostly limited to basic hover states or simple fade-in effects rather than advanced motion design or micro-interactions. The overall design quality is functional and consistent, with uniform color usage and alignment, but it lacks premium detailing such as layered depth, nuanced shadows, or dynamic visual transitions that elevate high-end interfaces. UI components load in a generally acceptable timeframe on desktop, though the absence of visibly aggressive lazy-loading or skeleton loaders suggests performance optimization is moderate; image-heavy sections may introduce some CLS risk if dimensions are not strictly reserved, while metrics like LCP and FID would likely fall into an average range for small-to-mid-scale websites rather than optimized benchmarks. Scrolling behavior is straightforward and linear, without parallax, sticky animated transitions, or scroll-triggered storytelling effects, which keeps usability simple but visually static. Overall, the frontend styling delivers clarity and consistency, but remains conservative—favoring reliability and ease of use over expressive design, advanced animation, or cutting-edge performance-driven UI techniques.

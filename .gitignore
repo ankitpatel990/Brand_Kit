@@ -1,0 +1,185 @@
+# ===================================
+# BrandKit - Git Ignore Configuration
+# ===================================
+
+# ===== OPERATING SYSTEM =====
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ===== IDE & EDITORS =====
+# IntelliJ IDEA / WebStorm
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.idea_modules/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Cursor
+.cursor/
+
+# ===== BACKEND (Java/Spring Boot) =====
+# Maven
+backend/target/
+!backend/.mvn/wrapper/maven-wrapper.jar
+backend/.mvn/wrapper/maven-wrapper.properties
+
+# Gradle (if used)
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# Compiled files
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Log files
+*.log
+logs/
+
+# Spring Boot
+backend/*.log*
+backend/spring-boot-*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# ===== FRONTEND (Next.js/Node) =====
+# Dependencies
+frontend/node_modules/
+node_modules/
+
+# Next.js build
+frontend/.next/
+frontend/out/
+
+# Production build
+frontend/build/
+frontend/dist/
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Env files (keep examples)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env
+frontend/.env.local
+frontend/.env*.local
+backend/.env
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+frontend/next-env.d.ts
+
+# ===== DATABASE =====
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# ===== TESTING =====
+coverage/
+.nyc_output/
+frontend/coverage/
+backend/coverage/
+
+# ===== SECURITY =====
+# Private keys
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+
+# Secrets
+secrets/
+credentials/
+*.secret
+
+# ===== MISCELLANEOUS =====
+# Temporary Python files (scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Large media files (if not needed in repo)
+# *.mp4
+# *.mov
+# *.avi
+
+# ===== PROJECT SPECIFIC =====
+# Compiled error logs
+backend/compile_errors.txt
+
+# Lombok removal scripts (utility scripts, not needed in production)
+backend/remove_lombok.py
+backend/remove_lombok_v2.py
+backend/remove-lombok.ps1
+backend/restore_lombok.py
+
+# Package lock from wrong location
+backend/package-lock.json
+
+# ===== KEEP THESE (whitelist) =====
+!.gitkeep
+!.mvn/wrapper/maven-wrapper.jar
