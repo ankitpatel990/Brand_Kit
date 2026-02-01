@@ -168,6 +168,9 @@ __pycache__/
 # *.avi
 
 # ===== PROJECT SPECIFIC =====
+# Documents folder (FRDs, PRD, prompts - local only)
+Documents/
+
 # Compiled error logs
 backend/compile_errors.txt
 
